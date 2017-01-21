@@ -26,7 +26,6 @@ public class ActivateFollow : MonoBehaviour {
                                                                                    ).transform.GetChild(0).transform;
             GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts++;
             other.transform.name = "bodyPart" + GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts.ToString();
-         
 
         }
 		if (other.transform.tag == "Divide") {//CODIGO DAS BARREIRAS

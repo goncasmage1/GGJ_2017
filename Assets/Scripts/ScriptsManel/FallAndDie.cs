@@ -20,22 +20,23 @@ public class FallAndDie : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.transform.tag == "Level" && canCollide) {
-
 			canCollide = false;
 			int count = 0;
-			while(gameObject.name != "bodyPart" + count.ToString()){count++;}
 
-
-			gameObject.GetComponent<FollowCarrot> ().enabled = false;
-			gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
-			for (int j = GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts; j >= count; j--) {
-				if(GameObject.Find("bodyPart"+j) != null)
-					Destroy (GameObject.Find("bodyPart"+j));
+			if (!gameObject.name.Contains("H")) {
+				while (gameObject.name != "bodyPart" + count.ToString ()) {
+					count++;
+				}
+				gameObject.GetComponent<FollowCarrot> ().enabled = false;
+				gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
+				for (int j = GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts; j >= count; j--) {
+					if(GameObject.Find("bodyPart"+j) != null)
+						Destroy (GameObject.Find("bodyPart"+j));
+				}
+				GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts 
+				= (count - 1 > GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts)
+					? GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts : count - 1; 
 			}
-
-			GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts 
-			= (count - 1 > GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts)
-				? GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts : count - 1; 
 		}
 	}
 
