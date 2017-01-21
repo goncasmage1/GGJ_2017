@@ -121,7 +121,7 @@ public class Controls1 : MonoBehaviour {
         // Make the current object turn
         //transform.localRotation *= Quaternion.Euler(0.0f, state.ThumbSticks.Left.X * 25.0f * Time.deltaTime, 0.0f);
         if(transform.name == "bodyPart0")
-			transform.position = new Vector3(transform.position.x, transform.position.y - state.ThumbSticks.Left.X * speed + Mathf.Cos(Time.time*10) * 0.05f, 0.0f);
+			transform.position = new Vector3(transform.position.x, transform.position.y - state.ThumbSticks.Left.X * speed /*+ Mathf.Cos(Time.time*10) * 0.05f*/, 0.0f);
         if (transform.name.Contains("HbodyPart") && transform.parent.GetComponent<SnakeStatus>().hasDivided == true)
         {
 			transform.position = new Vector3(transform.position.x, transform.position.y - state.ThumbSticks.Right.X * speed + Mathf.Cos(Time.time * 10) * 0.05f, 0.0f);

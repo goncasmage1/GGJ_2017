@@ -23,20 +23,39 @@ public class FallAndDie : MonoBehaviour {
 			canCollide = false;
 			int count = 0;
 
-			if (!gameObject.name.Contains("H")) {
-				while (gameObject.name != "bodyPart" + count.ToString ()) {
-					count++;
-				}
-				gameObject.GetComponent<FollowCarrot> ().enabled = false;
-				gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
-				for (int j = GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts; j >= count; j--) {
-					if(GameObject.Find("bodyPart"+j) != null)
-						Destroy (GameObject.Find("bodyPart"+j));
-				}
-				GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts 
-				= (count - 1 > GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts)
-					? GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts : count - 1; 
-			}
+            if (!gameObject.name.Contains("H"))
+            {
+                while (gameObject.name != "bodyPart" + count.ToString())
+                {
+                    count++;
+                }
+                gameObject.GetComponent<FollowCarrot>().enabled = false;
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                int secondSnake = (GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().hasDivided) ? (GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().secondHead) : 0;
+                for (int j = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts - secondSnake; j >= count; j--)
+                {
+                    if (GameObject.Find("bodyPart" + j) != null)
+                        Destroy(GameObject.Find("bodyPart" + j));
+                }
+                GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts
+                = (count - 1 > GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts)
+                    ? GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts : count - 1;
+            }
+            else
+            {
+                for (int j = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts; j >
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().secondHead; j--) 
+                {
+                    if (GameObject.Find("bodyPart" + j) != null)
+                        Destroy(GameObject.Find("bodyPart" + j));
+                }
+                GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts
+                -= GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().secondHead;
+                gameObject.GetComponent<Controls1>().enabled = false;
+                Destroy(gameObject);
+            }
+           
+           
 		}
 	}
 

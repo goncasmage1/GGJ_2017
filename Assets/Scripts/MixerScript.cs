@@ -3,36 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class MixerScript : MonoBehaviour {
 
-	public AudioSource[] tracks;
+	public AudioClip[] clips;
+	private AudioSource source;
 	private int index = 0;
 	public int loopStart;
 
 	void Awake ()
 	{
-		if (tracks.Length == 0) {
-			Debug.LogError("No audio sources indicated!");
+		if ((source = GetComponent<AudioSource> ()) == null) {
+			Debug.Log ("No AudioSource available!");
 		}
 	}
 
 	void Start ()
 	{
-		Instantiate(tracks[index]);
-		StartCoroutine(PlayAfterSound(tracks[index].clip.length));
+		source.clip = clips [index];
+		source.Play ();
+		StartCoroutine(PlayAfterSound(clips[index].length));
 	}
 
 	IEnumerator PlayAfterSound (float secondsToWait)
 	{
 		yield return new WaitForSeconds (secondsToWait);
 		index++;
-		if (tracks.Length > index) {
-			Instantiate (tracks [index]);
-			StartCoroutine (PlayAfterSound (tracks [index].clip.length));
+		if (clips.Length > index) {
+			source.clip = clips [index];
+			source.Play ();
+			StartCoroutine (PlayAfterSound (clips [index].length));
 		} else {
 			index = loopStart;
-			Instantiate (tracks [index]);
-			StartCoroutine (PlayAfterSound (tracks [index].clip.length));
+			source.clip = clips [index];
+			source.Play ();
+			StartCoroutine (PlayAfterSound (clips [index].length));
 		}
 		yield break;
 	}
