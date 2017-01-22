@@ -15,10 +15,12 @@ public class FollowCarrot : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, destination.position, speed * 3.0f * Time.deltaTime);
-        Vector3 dir = transform.position - destination.transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * speed);
+		if (transform != null) {
+			transform.position = Vector3.Lerp (transform.position, destination.position, speed * 3.0f * Time.deltaTime);
+			Vector3 dir = transform.position - destination.transform.position;
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg + 180;
+			Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+			transform.rotation = Quaternion.Slerp (transform.rotation, q, Time.deltaTime * speed);
+		}
     }
 }

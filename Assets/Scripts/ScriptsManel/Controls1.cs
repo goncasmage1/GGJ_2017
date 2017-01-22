@@ -91,6 +91,9 @@ public class Controls1 : MonoBehaviour {
                 auxObj.name = "H" + auxObj.name;//secondary Head
                 auxObj.GetComponent<Controls1>().enabled = true;
 				auxObj.GetComponent<FallAndDie> ().enabled = false;
+
+                auxObj.GetComponent<Animator>().SetBool("isH", true); 
+
                 transform.parent.GetComponent<SnakeStatus>().hasDivided = true;
                 transform.parent.GetComponent<SnakeStatus>().secondHead = transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts / 2 + 1;
             }
@@ -102,6 +105,8 @@ public class Controls1 : MonoBehaviour {
                 auxObj.GetComponent<FollowCarrot>().enabled = true;
                 auxObj.GetComponent<Controls1>().enabled = false;
 				auxObj.GetComponent<FallAndDie> ().enabled = true;
+                auxObj.GetComponent<Animator>().SetBool("isH", false); 
+
 
                 for (int i = transform.parent.GetComponent<SnakeStatus>().secondHead - 1; i >= 0; i--)
                 {
