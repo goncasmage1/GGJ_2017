@@ -9,6 +9,8 @@ public class EndUI : MonoBehaviour {
 
 	public Transform endUI;
 	public Transform flashUI;
+	public Transform[] toDestroy;
+	public float length = 1f;
 
 	void Awake() {
 		if (endUI == null){
