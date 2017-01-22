@@ -2,16 +2,25 @@
 using System.Collections;
 
 public class ActivateFollow : MonoBehaviour {
+
 	bool invisivel;
-	// Use this for initialization
+	public int bonusScore = 5;
+	int score = 0;
+
+	private PlayerUI playerUI;
+
 	void Start () {
 		invisivel = true;
+		playerUI = PlayerUI.PUI;
+		if (transform.parent.name == "Snake") {
+			if (playerUI == null) {
+				Debug.LogError ("No playerUI available!");
+			} else {
+				playerUI.UpdateScore (score);
+			}
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,7 +36,18 @@ public class ActivateFollow : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts++;
             other.transform.name = "bodyPart" + GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts.ToString();
 
+			score = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts * bonusScore;
         }
+		if (tag == "Jogador") {
+			Debug.Log ("Updato score!");
+			playerUI.UpdateScore(score);
+			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
+				Debug.Log ("Aumanta a velocidade");
+				GetComponent<Controls1> ().speed2 = 5f + 5f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
+			} else {
+				GetComponent<Controls1> ().speed2 = 10f;
+			}
+		}
 		if (other.transform.tag == "Divide") {//CODIGO DAS BARREIRAS
 			GameObject.Find ("bodyPart0").GetComponent<Controls1> ().divideBool = true;
 			GameObject auxObjs = GameObject.Find("HbodyPart" + transform.parent.GetComponent<SnakeStatus>().secondHead.ToString());
@@ -35,7 +55,17 @@ public class ActivateFollow : MonoBehaviour {
 			other.transform.tag = "UnDivide";
 		}
 
-	
-
     }
+
+	public void UpdateScore(int newScore) {
+		if (tag == "Jogador") {
+			playerUI.UpdateScore (newScore * bonusScore);
+			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
+				GetComponent<Controls1> ().speed2 = 5f + 3f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
+			} else {
+				Debug.Log ("Aumanta a velocidade");
+				GetComponent<Controls1> ().speed2 = 8f;
+			}
+		}
+	}
 }

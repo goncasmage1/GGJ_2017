@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FallAndDie : MonoBehaviour {
 	bool canCollide = true;
+	bool isPlayer = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,10 @@ public class FallAndDie : MonoBehaviour {
 			canCollide = false;
 			int count = 0;
 
+			if (tag == "Jogador") {
+				Debug.Log ("Morreu");
+				isPlayer = true;
+			}
             if (!gameObject.name.Contains("H"))
             {
                 while (gameObject.name != "bodyPart" + count.ToString())
@@ -37,9 +42,14 @@ public class FallAndDie : MonoBehaviour {
                     if (GameObject.Find("bodyPart" + j) != null)
                         Destroy(GameObject.Find("bodyPart" + j));
                 }
+
                 GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts
-                = (count - 1 > GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts)
-                    ? GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts : count - 1;
+                = /*(count - 1 > GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts)
+                    ? GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts :*/ count - 1;
+
+				if (count > 0) {
+					GameObject.FindGameObjectWithTag ("Jogador").GetComponent<ActivateFollow> ().UpdateScore (count - 1);
+				}
             }
             else
             {

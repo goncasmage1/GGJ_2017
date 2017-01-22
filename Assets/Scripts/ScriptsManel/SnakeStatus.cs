@@ -7,15 +7,10 @@ public class SnakeStatus : MonoBehaviour {
     public bool hasDivided = false;
     public int secondHead;
 
-
 	// Use this for initialization
 	void Start () {
         numberOfBodyParts = 0;
         hasDivided = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
