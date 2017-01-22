@@ -11,6 +11,7 @@ public class EndUI : MonoBehaviour {
 	public FlashScript flashUI;
 	public Transform[] toDestroy;
 	public float length = 1f;
+	public float wait = .1f;
 
 	void Awake() {
 		if (endUI == null){
@@ -24,17 +25,22 @@ public class EndUI : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Jogador") {
 			other.GetComponent<Controls1>().cameraFollows = false;
-			StartFlash (other);
+			other.GetComponent<Controls1>().speed = 0;
+			StartCoroutine(StartFlash (other));
 		}
 	}
 
 	public IEnumerator StartFlash(Collider2D other) {
-		flashUI.SetFlash ();
+		flashUI.SetFlash (true);
 		int i;
 		for (i = 0; i < toDestroy.Length; i++) {
-
+			yield return new WaitForSeconds (wait);
+			Destroy (toDestroy [i].gameObject);
+			yield return new WaitForSeconds (length - wait);
 		}
-		return null;
+		EnableUI (other);
+		flashUI.SetFlash (false);
+		yield break;
 	}
 
 	public void EnableUI(Collider2D other) {

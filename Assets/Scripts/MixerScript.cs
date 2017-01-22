@@ -8,11 +8,16 @@ public class MixerScript : MonoBehaviour {
 
 	public AudioClip[] clips;
 	private AudioSource source;
+	public static MixerScript mixer;
+
 	private int index = 0;
 	public int loopStart;
 
 	void Awake ()
 	{
+		if (mixer == null) {
+			mixer = this;
+		}
 		if ((source = GetComponent<AudioSource> ()) == null) {
 			Debug.Log ("No AudioSource available!");
 		}
@@ -41,4 +46,5 @@ public class MixerScript : MonoBehaviour {
 		}
 		yield break;
 	}
+
 }

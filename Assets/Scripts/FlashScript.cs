@@ -8,12 +8,12 @@ public class FlashScript : MonoBehaviour {
 	private Animator anim;
 
 	public void Awake() {
-		if ((anim == GetComponent<Animator> ()) == null) {
+		if ((anim = GetComponent<Animator>()) == null) {
 			Debug.LogError ("No Animator available");
 		}
 	}
 
-	public void SetFlash() {
-		anim.SetBool ("Flash", true);
+	public void SetFlash(bool newFlash) {
+		anim.SetBool ("Flash", newFlash);
 	}
 }
