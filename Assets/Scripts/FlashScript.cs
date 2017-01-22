@@ -13,7 +13,7 @@ public class FlashScript : MonoBehaviour {
 		}
 	}
 
-	public void SetFlash(bool newFlash) {
-		anim.SetBool ("Flash", newFlash);
+	public void SetFlash() {
+		anim.SetBool ("Flash", true);
 	}
 }
