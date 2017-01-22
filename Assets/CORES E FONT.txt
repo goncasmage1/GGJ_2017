@@ -1,0 +1,4 @@
+Font: Comfortaa
+Cor do BG menu: 9b434f
+Cor Botões: 9b434f
+Cor texto: ffffff
