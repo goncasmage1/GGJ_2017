@@ -39,13 +39,12 @@ public class ActivateFollow : MonoBehaviour {
 			score = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts * bonusScore;
         }
 		if (tag == "Jogador") {
-			Debug.Log ("Updato score!");
 			playerUI.UpdateScore(score);
 			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
 				Debug.Log ("Aumanta a velocidade");
-				GetComponent<Controls1> ().speed2 = 5f + 5f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
+				GetComponent<Controls1> ().speed2 = 5f + 7f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
 			} else {
-				GetComponent<Controls1> ().speed2 = 10f;
+				GetComponent<Controls1> ().speed2 = 12f;
 			}
 		}
 		if (other.transform.tag == "Divide") {//CODIGO DAS BARREIRAS
@@ -63,7 +62,6 @@ public class ActivateFollow : MonoBehaviour {
 			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
 				GetComponent<Controls1> ().speed2 = 5f + 3f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
 			} else {
-				Debug.Log ("Aumanta a velocidade");
 				GetComponent<Controls1> ().speed2 = 8f;
 			}
 		}
