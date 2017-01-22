@@ -34,6 +34,7 @@ public class EndUI : MonoBehaviour {
 		for (i = 0; i < toDestroy.Length; i++) {
 
 		}
+		return null;
 	}
 
 	public void EnableUI(Collider2D other) {
