@@ -35,6 +35,9 @@ public class ActivateFollow : MonoBehaviour {
                                                                                    ).transform.GetChild(0).transform;
             GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts++;
             other.transform.name = "bodyPart" + GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts.ToString();
+			Color tempColor = other.GetComponent<SpriteRenderer> ().color;
+			tempColor.a = 255;
+			other.GetComponent<SpriteRenderer> ().color = tempColor;
 
 			score = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts * bonusScore;
         }
