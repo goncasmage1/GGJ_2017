@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class FallAndDie : MonoBehaviour {
 
 	public Transform deathParticles;
+	public AudioClip deathSound;
 
 	bool canCollide = true;
 	bool isPlayer = false;
@@ -48,6 +49,10 @@ public class FallAndDie : MonoBehaviour {
                 {
 					if (j == 0) {
 						Transform clone = Instantiate (deathParticles, transform.position, transform.rotation);
+						if (MixerScript.mixer != null && deathSound != null) {
+							MixerScript.mixer.GetComponent<AudioSource> ().clip = deathSound;
+							MixerScript.mixer.GetComponent<AudioSource> ().Play ();
+						}
 						Destroy (clone.gameObject, 5f);
 						Invoke ("Restart", 2f);
 						GetComponent<SpriteRenderer> ().enabled = false;
