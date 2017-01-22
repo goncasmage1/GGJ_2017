@@ -29,7 +29,7 @@ public class ActivateFollow : MonoBehaviour {
 			//other.GetComponent<SpriteRenderer> ().enabled = invisivel;
 			//invisivel = !invisivel;
             other.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
-            other.GetComponent<FollowCarrot>().enabled = true;
+			other.GetComponent<FollowCarrot>().enabled = true;
             other.GetComponent<FollowCarrot>().destination = GameObject.Find("bodyPart" + 
                                                                                    GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts.ToString()
                                                                                    ).transform.GetChild(0).transform;
@@ -41,7 +41,6 @@ public class ActivateFollow : MonoBehaviour {
 		if (tag == "Jogador") {
 			playerUI.UpdateScore(score);
 			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
-				Debug.Log ("Aumanta a velocidade");
 				GetComponent<Controls1> ().speed2 = 5f + 7f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
 			} else {
 				GetComponent<Controls1> ().speed2 = 12f;
@@ -66,4 +65,5 @@ public class ActivateFollow : MonoBehaviour {
 			}
 		}
 	}
+
 }

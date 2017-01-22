@@ -11,6 +11,7 @@ public class Controls1 : MonoBehaviour {
     public float speed = 1.0f, speed2;
 	public float extraCameraX = 5f;
 	public bool goUp;
+	public bool cameraFollows = true;
 	public int divide_number;
     bool flag = true;
 	public bool divideBool = false;
@@ -44,9 +45,11 @@ public class Controls1 : MonoBehaviour {
 				newPos2.x += speed2*Time.deltaTime;
 				auxObjs.transform.position = newPos2;
 			}
-			Vector3 newCameraPos = Camera.main.transform.position;
-			newCameraPos.x = transform.position.x + extraCameraX;
-			Camera.main.transform.position = newCameraPos;
+			if (cameraFollows) {
+				Vector3 newCameraPos = Camera.main.transform.position;
+				newCameraPos.x = transform.position.x + extraCameraX;
+				Camera.main.transform.position = newCameraPos;
+			}
 		}
 
         // Find a PlayerIndex, for a single player game
@@ -69,7 +72,9 @@ public class Controls1 : MonoBehaviour {
         prevState = state;
         state = GamePad.GetState(playerIndex);
         GameObject auxObj;
-        float restrictMoveX = transform.position.x + state.ThumbSticks.Left.X * speed;
+
+		//float restrictMoveX = transform.position.x + extraPos * speed;
+
         bool forFlag = false;
         // Detect if a button was pressed this frame
 		if (divideBool)
@@ -79,7 +84,7 @@ public class Controls1 : MonoBehaviour {
             {
 				Debug.Log ("I am here 2 crl");
 				flag = true;
-			
+				Debug.Log (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts);
                 auxObj = GameObject.Find( "bodyPart" + (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts / 2 + 1).ToString());
                 auxObj.GetComponent<FollowCarrot>().enabled = false;
                 auxObj.transform.position = new Vector3(0,1,0);
@@ -112,19 +117,19 @@ public class Controls1 : MonoBehaviour {
         // Detect if a button was released this frame
 		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released || !debugBool)
         {
+			
         }
-
-
-        // Set vibration according to triggers
-        GamePad.SetVibration(playerIndex, state.Triggers.Left, state.Triggers.Right);
 
         // Make the current object turn
         //transform.localRotation *= Quaternion.Euler(0.0f, state.ThumbSticks.Left.X * 25.0f * Time.deltaTime, 0.0f);
-        if(transform.name == "bodyPart0")
-			transform.position = new Vector3(transform.position.x, transform.position.y - state.ThumbSticks.Left.X * speed /*+ Mathf.Cos(Time.time*10) * 0.05f*/, 0.0f);
+		if (transform.name == "bodyPart0") {
+			float extraPos = Mathf.Abs (state.ThumbSticks.Left.X) < Mathf.Abs (Input.GetAxis ("Horizontal")) ? Input.GetAxis ("Horizontal") : state.ThumbSticks.Left.X;
+			transform.position = new Vector3 (transform.position.x, transform.position.y - extraPos * speed /*+ Mathf.Cos(Time.time*10) * 0.05f*/, 0.0f);
+		}
         if (transform.name.Contains("HbodyPart") && transform.parent.GetComponent<SnakeStatus>().hasDivided == true)
         {
-			transform.position = new Vector3(transform.position.x, transform.position.y - state.ThumbSticks.Right.X * speed + Mathf.Cos(Time.time * 10) * 0.05f, 0.0f);
+			float nesPosX = Mathf.Abs(state.ThumbSticks.Right.X) < Mathf.Abs(Input.GetAxis ("Horizontal2")) ? Input.GetAxis ("Horizontal2") : state.ThumbSticks.Right.X;
+			transform.position = new Vector3(transform.position.x, transform.position.y - nesPosX * speed, 0f);
         }
 			
     }
