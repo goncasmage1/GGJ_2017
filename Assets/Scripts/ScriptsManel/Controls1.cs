@@ -13,6 +13,7 @@ public class Controls1 : MonoBehaviour {
 	public bool goUp;
 	public bool cameraFollows = true;
 	public int divide_number;
+	public AudioClip pickupSound;
     bool flag = true;
 	public bool divideBool = false;
 
@@ -80,6 +81,10 @@ public class Controls1 : MonoBehaviour {
 		if (divideBool)
         {
 			divideBool = false;
+			if (MixerScript.mixer != null && pickupSound != null) {
+				MixerScript.mixer.GetComponent<AudioSource> ().clip = pickupSound;
+				MixerScript.mixer.GetComponent<AudioSource> ().Play ();
+			}
 			if (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts > divide_number && !transform.parent.GetComponent<SnakeStatus>().hasDivided)
             {
 				Debug.Log ("I am here 2 crl");
