@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class EndUI : MonoBehaviour {
 
 	public Transform endUI;
-	public Transform flashUI;
+	public FlashScript flashUI;
+	public Transform[] toDestroy;
+	public float length = 1f;
 
 	void Awake() {
 		if (endUI == null){
@@ -26,8 +28,13 @@ public class EndUI : MonoBehaviour {
 		}
 	}
 
-	public void StartFlash(Collider2D other) {
+	public IEnumerator StartFlash(Collider2D other) {
+		flashUI.SetFlash ();
+		int i;
+		for (i = 0; i < toDestroy.Length; i++) {
 
+		}
+		return null;
 	}
 
 	public void EnableUI(Collider2D other) {

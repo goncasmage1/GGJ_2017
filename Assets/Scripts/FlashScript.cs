@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class FlashScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	private Animator anim;
+
+	public void Awake() {
+		if ((anim == GetComponent<Animator> ()) == null) {
+			Debug.LogError ("No Animator available");
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void SetFlash() {
+		anim.SetBool ("Flash", true);
 	}
 }
