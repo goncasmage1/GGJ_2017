@@ -22,11 +22,8 @@ public class FallAndDie : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		try{}
-		catch(MissingReferenceException e){
-			Destroy(gameObject);}
-		}
+    void Update() { }
+		
 
 	void OnTriggerEnter2D(Collider2D other)
 	{

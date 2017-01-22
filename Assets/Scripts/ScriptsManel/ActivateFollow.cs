@@ -46,7 +46,8 @@ public class ActivateFollow : MonoBehaviour {
 				GetComponent<Controls1> ().speed2 = 12f;
 			}
 		}
-		if (other.transform.tag == "Divide") {//CODIGO DAS BARREIRAS
+		if (other.transform.tag == "Divide" && !gameObject.name.Contains("H") ) {//CODIGO DAS BARREIRAS
+            Debug.Log(transform.name);
 			GameObject.Find ("bodyPart0").GetComponent<Controls1> ().divideBool = true;
 			GameObject auxObjs = GameObject.Find("HbodyPart" + transform.parent.GetComponent<SnakeStatus>().secondHead.ToString());
 			if(auxObjs!=null){auxObjs.GetComponent<Controls1> ().divideBool = true;}
