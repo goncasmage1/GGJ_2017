@@ -72,7 +72,7 @@ public class Controls1 : MonoBehaviour {
         float restrictMoveX = transform.position.x + state.ThumbSticks.Left.X * speed;
         bool forFlag = false;
         // Detect if a button was pressed this frame
-		if ((prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed ) || divideBool  )
+		if (divideBool)
         {
 			divideBool = false;
 			if (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts > divide_number && !transform.parent.GetComponent<SnakeStatus>().hasDivided)
