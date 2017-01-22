@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class FallAndDie : MonoBehaviour {
 
 	public Transform deathParticles;
 	public AudioClip deathSound;
+	public AudioMixerGroup group;
 
 	bool canCollide = true;
 	bool isPlayer = false;
@@ -49,10 +51,13 @@ public class FallAndDie : MonoBehaviour {
                 {
 					if (j == 0) {
 						Transform clone = Instantiate (deathParticles, transform.position, transform.rotation);
-						if (MixerScript.mixer != null && deathSound != null) {
-							MixerScript.mixer.GetComponent<AudioSource> ().clip = deathSound;
-							MixerScript.mixer.GetComponent<AudioSource> ().Play ();
+						AudioSource newAudio = gameObject.AddComponent<AudioSource> ();
+						newAudio.outputAudioMixerGroup = group;
+						if (deathSound != null) {
+							newAudio.clip = deathSound;
+							newAudio.Play ();
 						}
+						MixerScript.mixer.FadeOut ();
 						Destroy (clone.gameObject, 5f);
 						Invoke ("Restart", 2f);
 						GetComponent<SpriteRenderer> ().enabled = false;

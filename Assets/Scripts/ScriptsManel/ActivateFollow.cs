@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 
 public class ActivateFollow : MonoBehaviour {
@@ -6,6 +7,9 @@ public class ActivateFollow : MonoBehaviour {
 	bool invisivel;
 	public int bonusScore = 5;
 	int score = 0;
+
+	public AudioMixerGroup group;
+	public AudioClip myClip;
 
 	private PlayerUI playerUI;
 
@@ -28,6 +32,13 @@ public class ActivateFollow : MonoBehaviour {
         {
 			//other.GetComponent<SpriteRenderer> ().enabled = invisivel;
 			//invisivel = !invisivel;
+			AudioSource newAudio = gameObject.AddComponent<AudioSource> ();
+			newAudio.outputAudioMixerGroup = group;
+			if (myClip != null) {
+				newAudio.clip = myClip;
+				newAudio.volume = .35f;
+				newAudio.Play ();
+			}
             other.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
 			other.GetComponent<FollowCarrot>().enabled = true;
             other.GetComponent<FollowCarrot>().destination = GameObject.Find("bodyPart" + 

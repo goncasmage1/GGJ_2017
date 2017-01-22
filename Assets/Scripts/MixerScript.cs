@@ -47,4 +47,16 @@ public class MixerScript : MonoBehaviour {
 		yield break;
 	}
 
+	public void FadeOut() {
+		StartCoroutine (StartFade ());
+	}
+
+	public IEnumerator StartFade() {
+		while (source.volume > 0) {
+			source.volume -= 1 * Time.deltaTime / 0.5f;
+			yield return null;
+		}
+		yield break;
+	}
+
 }

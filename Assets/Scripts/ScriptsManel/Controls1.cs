@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using XInputDotNetPure;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class Controls1 : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class Controls1 : MonoBehaviour {
 	public AudioClip pickupSound;
     bool flag = true;
 	public bool divideBool = false;
+	public AudioMixerGroup group;
 
 	/// <summary>
 	///  DEBUG
@@ -81,8 +83,13 @@ public class Controls1 : MonoBehaviour {
 		if (divideBool)
         {
 			divideBool = false;
-			Debug.Log ("Chegou");
-			gameObject.AddComponent<AudioSource> ();
+			AudioSource newAudio = gameObject.AddComponent<AudioSource> ();
+			newAudio.outputAudioMixerGroup = group;
+			if (pickupSound != null) {
+				newAudio.clip = pickupSound;
+				newAudio.Play ();
+			}
+			Destroy (newAudio.gameObject, 5f);
 			if (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts > divide_number && !transform.parent.GetComponent<SnakeStatus>().hasDivided)
             {
 				Debug.Log ("I am here 2 crl");
@@ -90,7 +97,7 @@ public class Controls1 : MonoBehaviour {
 				Debug.Log (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts);
                 auxObj = GameObject.Find( "bodyPart" + (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts / 2 + 1).ToString());
                 auxObj.GetComponent<FollowCarrot>().enabled = false;
-                auxObj.transform.position = new Vector3(0,1,0);
+                //auxObj.transform.position = new Vector3(0,1,0);
                 auxObj.name = "H" + auxObj.name;//secondary Head
                 auxObj.GetComponent<Controls1>().enabled = true;
 				auxObj.GetComponent<FallAndDie> ().enabled = false;
