@@ -28,6 +28,7 @@ public class ActivateFollow : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+    	Debug.Log("Entrou");
         if (other.transform.name.Contains("bodyPart") && other.transform.parent.name != "Snake")
         {
 			//other.GetComponent<SpriteRenderer> ().enabled = invisivel;
@@ -53,7 +54,6 @@ public class ActivateFollow : MonoBehaviour {
 			score = GameObject.FindGameObjectWithTag("Player").GetComponent<SnakeStatus>().numberOfBodyParts * bonusScore;
         }
 		if (tag == "Jogador") {
-			playerUI.UpdateScore(score);
 			if (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts < 10) {
 				GetComponent<Controls1> ().speed2 = 5f + 7f * (GameObject.FindGameObjectWithTag ("Player").GetComponent<SnakeStatus> ().numberOfBodyParts / 10f);
 			} else {

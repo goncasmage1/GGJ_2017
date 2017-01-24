@@ -15,7 +15,7 @@ public class FollowCarrot : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-		if (transform != null) {
+		if (transform != null && !transform.name.Contains("H") || !transform.name.Contains("0")) {
 			transform.position = Vector3.Lerp (transform.position, destination.position, speed * 3.0f * Time.deltaTime);
 			Vector3 dir = transform.position - destination.transform.position;
 			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg + 180;

@@ -89,7 +89,7 @@ public class Controls1 : MonoBehaviour {
 				newAudio.clip = pickupSound;
 				newAudio.Play ();
 			}
-			Destroy (newAudio.gameObject, 5f);
+			//Destroy (newAudio.gameObject, 5f);
 			if (transform.parent.GetComponent<SnakeStatus>().numberOfBodyParts > divide_number && !transform.parent.GetComponent<SnakeStatus>().hasDivided)
             {
 				Debug.Log ("I am here 2 crl");
@@ -118,6 +118,9 @@ public class Controls1 : MonoBehaviour {
 				auxObj.GetComponent<FallAndDie> ().enabled = true;
                 auxObj.GetComponent<Animator>().SetBool("isH", false);
                 auxObj.GetComponent<CapsuleCollider2D>().size = new Vector2(2.7f, 0.95f);
+                foreach (GameObject g in GameObject.FindGameObjectsWithTag("fix")){
+                	g.GetComponent<FallAndDie>().enabled = false;
+                }
 
 
 
